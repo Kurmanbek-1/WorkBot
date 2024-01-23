@@ -14,18 +14,20 @@ async def delete_products_coming_command_by_city(message: types.Message, city: s
         products = await ORM_main.sql_command_all_products_coming()
         for product in products:
             if product[5] == city:
-                photo_path = os.path.abspath(product[9])  # Получение абсолютного пути к файлу
+                photo_path = os.path.abspath(product[9])
 
                 if os.path.exists(photo_path):
-                    await bot.send_photo(message.from_user.id, photo=open(photo_path, 'rb'), caption=f"Товар: {product[1]}\n"
-                                                                                                       f"Информация о товаре: {product[2]}\n"
-                                                                                                       f"Дата прихода: {product[3]}\n"
-                                                                                                       f"Цена: {product[4]}\n"
-                                                                                                       f"Город: {product[5]}\n"
-                                                                                                       f"Артикул: {product[7]}\n"
-                                                                                                       f"количество: {product[8]}\n",
-                                         reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(f"delete {product[0]}",
-                                                                                                      callback_data=f"delete_com_pr {product[0]}")))
+                    await bot.send_photo(message.from_user.id, photo=open(photo_path, 'rb'), 
+                                        caption=f"Товар: {product[1]}\n"
+                                        f"Информация о товаре: {product[2]}\n"
+                                        f"Дата прихода: {product[3]}\n"
+                                        f"Цена: {product[4]}\n"
+                                        f"Город: {product[5]}\n"
+                                        f"Артикул: {product[7]}\n"
+                                        f"количество: {product[8]}\n",
+                                        reply_markup=InlineKeyboardMarkup().add(
+                                            InlineKeyboardButton(f"delete {product[0]}",
+                                            callback_data=f"delete_com_pr {product[0]}")))
                 else:
                     print(f"Файл не найден: {photo_path}")
     else:
@@ -40,8 +42,8 @@ async def delete_products_coming_command_Osh(message: types.Message):
 async def delete_products_coming_command_Moscow_1(message: types.Message):
     await delete_products_coming_command_by_city(message, 'Москва_1')
 
-async def delete_products_coming_command_Moscow_2(message: types.Message):
-    await delete_products_coming_command_by_city(message, 'Москва_2')
+async def delete_products_coming_command_Osh_2(message: types.Message):
+    await delete_products_coming_command_by_city(message, 'Ош 2-филиал')
 
 # ======================================================================================================================
 
@@ -56,7 +58,7 @@ def register_handler_admin(dp: Dispatcher):
     dp.register_message_handler(delete_products_coming_command_Bish, commands=['Удал_Прих_Bishkek'])
     dp.register_message_handler(delete_products_coming_command_Osh, commands=['Удал_Прих_Osh'])
     dp.register_message_handler(delete_products_coming_command_Moscow_1, commands=['Удал_Прих_Moscow_1'])
-    dp.register_message_handler(delete_products_coming_command_Moscow_2, commands=['Удал_Прих_Moscow_2'])
+    dp.register_message_handler(delete_products_coming_command_Osh_2, commands=['Удал_Прих_Osh_2'])
     dp.register_callback_query_handler(complete_delete_comming_products,
                                        lambda call: call.data and call.data.startswith("delete_com_pr "))
 

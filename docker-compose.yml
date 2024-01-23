@@ -13,7 +13,7 @@ services:
       - POSTGRES_DB=OSOR_DB
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=238484
-      - POSTGRES_HOST=localhost  # Используйте имя сервиса базы данных в качестве хоста
+      - POSTGRES_HOST=db  # Используйте имя сервиса базы данных в качестве хоста
       - POSTGRES_PORT=5432
     depends_on:
       - db

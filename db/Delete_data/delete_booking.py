@@ -47,8 +47,8 @@ async def delete_booking_Moscow_1(message: types.Message):
     await delete_booking_by_city(message, 'Москва_1')
 
 
-async def delete_booking_Moscow_2(message: types.Message):
-    await delete_booking_by_city(message, 'Москва_2')
+async def delete_booking_Osh_2(message: types.Message):
+    await delete_booking_by_city(message, 'Ош_2')
 
 
 
@@ -66,6 +66,6 @@ def register_handler_admin(dp: Dispatcher):
     dp.register_message_handler(delete_booking_bish, commands=['Удал_Броней_Bishkek'])
     dp.register_message_handler(delete_booking_osh, commands=['Удал_Броней_Osh'])
     dp.register_message_handler(delete_booking_Moscow_1, commands=['Удал_Броней_Moscow_1'])
-    dp.register_message_handler(delete_booking_Moscow_2, commands=['Удал_Броней_Moscow_2'])
+    dp.register_message_handler(delete_booking_Osh_2, commands=['Удал_Броней_Osh_2'])
     dp.register_callback_query_handler(complete_delete_booking,
                                        lambda call: call.data and call.data.startswith("delete_booking "))

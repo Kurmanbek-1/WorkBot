@@ -1,8 +1,7 @@
 # =================================================================================================================
 from aiogram import types, Dispatcher
 from config import bot, Admins, Director
-from keyboards import buttons
-
+import buttons
 
 # =================================================================================================================
 
@@ -102,6 +101,7 @@ async def products_booking(message: types.Message):
     else:
         await message.answer("Вы не админ!")
 
+# ====================================================================================================================
 
 async def get_bishkek(message: types.Message):
     if message.from_user.id in Admins or Director:
@@ -124,11 +124,13 @@ async def get_moscow_1(message: types.Message):
         await message.answer("Вы не админ!")
 
 
-async def get_moscow_2(message: types.Message):
+async def get_Osh_2(message: types.Message):
     if message.from_user.id in Admins or Director:
-        await message.answer(f"Вы выбрали Москву! (Второй филиал)", reply_markup=buttons.get_branches_moscow_2_markup)
+        await message.answer(f"Вы выбрали Ош! (Второй филиал)", reply_markup=buttons.get_branches_moscow_2_markup)
     else:
         await message.answer("Вы не админ!")
+
+# ====================================================================================================================
 
 
 async def ButtonForFinance(message: types.Message):
@@ -209,8 +211,8 @@ async def Moscow_1_delete_button(message: types.Message):
     await message.answer("Выберите снизу из кнопок ⬇", reply_markup=buttons.moscow_1_delete_markup)
 
 
-async def Moscow_2_delete_button(message: types.Message):
-    await message.answer("Выберите снизу из кнопок ⬇", reply_markup=buttons.moscow_2_delete_markup)
+async def Osh_2_delete_button(message: types.Message):
+    await message.answer("Выберите снизу из кнопок ⬇", reply_markup=buttons.Osh_2_delete_markup)
 
 
 """----------"""
@@ -230,10 +232,6 @@ async def data_recording(message: types.Message):
 async def back_for_director(message: types.Message):
     await message.answer('Вы возвратились назад!', reply_markup=buttons.start_admins_markup)
 
-
-# "Вы находитесь в выводе товаров!"
-#                              "\n"
-#                              "Внизу выберите категорию ⬇"
 
 # =================================================================================================================
 
@@ -257,17 +255,19 @@ def register_commands(dp: Dispatcher):
     dp.register_message_handler(RegularСustomerButton, commands=['Постоянные_клиенты'])
     dp.register_message_handler(controlchecout, commands=['Контроль_кассы'])
 
+# ====================================================================================================================
     dp.register_message_handler(get_bishkek, commands=['Бишкек'])
     dp.register_message_handler(get_osh, commands=['Ош'])
     dp.register_message_handler(get_moscow_1, commands=['Москва_1'])
-    dp.register_message_handler(get_moscow_2, commands=['Москва_2'])
+    dp.register_message_handler(get_Osh_2, commands=['Ош_2'])
+# ====================================================================================================================
 
     dp.register_message_handler(DeleteButton, commands=['Удаление_из_базы'])
     dp.register_message_handler(back_for_director, commands=['<--назад'])
     dp.register_message_handler(Bish_delete_button, commands=["Бишкек_удаление"])
     dp.register_message_handler(Osh_delete_button, commands=["Ош_удаление"])
     dp.register_message_handler(Moscow_1_delete_button, commands=["Москва_1_удаление"])
-    dp.register_message_handler(Moscow_2_delete_button, commands=["Москва_2_удаление"])
+    dp.register_message_handler(Osh_2_delete_button, commands=["Ош_2_удаление"])
 
     dp.register_message_handler(back_for_staff, commands=['<-назад'])
     dp.register_message_handler(back_for_admins, commands=['<назад'])

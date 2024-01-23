@@ -37,9 +37,9 @@ async def sql_being_late_moscow_1(message: types.Message):
     await sql_being_late(message, 'Москва_1', connection)
 
 
-async def sql_being_late_moscow_2(message: types.Message):
+async def sql_being_late_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_being_late(message, 'Москва_2', connection)
+    await sql_being_late(message, 'Ош_2', connection)
 
 
 # ====================================================================================================================
@@ -48,4 +48,4 @@ def register_sql_commands(dp: Dispatcher):
     dp.register_message_handler(sql_being_late_bishkek, commands=['Контроль_Бишкек'])
     dp.register_message_handler(sql_being_late_osh, commands=['Контроль_Ош'])
     dp.register_message_handler(sql_being_late_moscow_1, commands=['Контроль_Москва_1'])
-    dp.register_message_handler(sql_being_late_moscow_2, commands=['Контроль_Москва_2'])
+    dp.register_message_handler(sql_being_late_Osh_2, commands=['Контроль_Ош_2'])

@@ -4,7 +4,7 @@ import logging
 from config import dp, bot, Admins
 from handlers import commands
 from handlers.FSM import (FSM_coming_products, FSM_care_products, FSM_booking, FSM_reg_staff, FSM_being_late)
-from handlers.NewFSM import Products_Coming_Category
+from db.sql_commands import Products_Coming_Category
 
 from db.db_main.ORM_main import create_tables
 from db.Delete_data import delete_care_products, delete_coming_products, delete_booking, delete_staff
@@ -12,7 +12,7 @@ from db.sql_commands import get_booking, get_staff, \
     get_salary_staff, get_products_care, get_regular_customer, get_being_late
 from db.checkout_control import get_info_ForControl
 
-from keyboards import buttons
+import buttons
 from config import data_b
 
 

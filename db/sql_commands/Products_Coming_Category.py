@@ -1,15 +1,19 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from keyboards import buttons
+import buttons
 from aiogram.dispatcher.filters import Text
 from db.sql_commands.utils import get_product_from_category
 import os
 import asyncpg
 from config import POSTGRES_URL, DESTINATION
 
-cities = ['Бишкек', 'ОШ', 'Москва 1-филиал', 'Москва 2-филиал']
+cities = ['Бишкек', 'ОШ', 'Москва 1-филиал', 'Ош 2-филиал']
 categories = ["/Обувь", "/Нижнее_белье", "/Акссесуары", "/Верхняя_одежда", "/Штаны"]
+
+
+# Создаем единый глобальный пул соединений
+db_pool = None
 
 
 class AllProductsForCategoryFSM(StatesGroup):
@@ -33,8 +37,17 @@ async def load_city(message: types.Message, state: FSMContext):
         await message.answer('Вы ввели не тот филиал!')
 
 
+async def get_db_pool():
+    global db_pool
+    if db_pool is None:
+        db_pool = await asyncpg.create_pool(POSTGRES_URL)
+    return db_pool
+
+
+# Модифицируем функцию load_category
 async def load_category(message: types.Message, state: FSMContext):
-    pool = await asyncpg.create_pool(POSTGRES_URL)
+    pool = await get_db_pool()
+
     async with state.proxy() as data_category:
         if message.text in categories:
             city = data_category['city']
@@ -46,7 +59,7 @@ async def load_category(message: types.Message, state: FSMContext):
                 products = await get_product_from_category(pool=pool, category=category, city=city)
             elif city == "Москва 1-филиал":
                 products = await get_product_from_category(pool=pool, category=category, city=city)
-            elif city == "Москва 2-филиал":
+            elif city == "Ош 2-филиал":
                 products = await get_product_from_category(pool=pool, category=category, city=city)
 
             for product in products:
@@ -68,7 +81,7 @@ async def load_category(message: types.Message, state: FSMContext):
                                                                         f"Категория: {product[6]}\n"
                                                                         f"Артикул: {product[7]}\n"
                                                                         f"Количество: {product[8]}\n",
-                                                   reply_markup=buttons.start_admins_markup)
+                                                   reply_markup=buttons.CategoryButtons)
                 except Exception as e:
                     print(f"Ошибка при открытии файла {photo_path}: {e}")
                     continue  # Продолжить с следующим товаром

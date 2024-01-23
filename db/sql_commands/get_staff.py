@@ -26,9 +26,9 @@ async def staff_moscow_1(message: types.Message):
     await sql_command_staff(message, 'Москва_1', connection)
 
 
-async def staff_moscow_2(message: types.Message):
+async def staff_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_staff(message, 'Москва_2', connection)
+    await sql_command_staff(message, 'Ош_2', connection)
 
 
 async def staff_bishkek(message: types.Message):
@@ -44,6 +44,6 @@ async def staff_osh(message: types.Message):
 
 def register_sql_commands(dp: Dispatcher):
     dp.register_message_handler(staff_moscow_1, commands=['Сотрудники_Москва_1'])
-    dp.register_message_handler(staff_moscow_2, commands=['Сотрудники_Москва_2'])
+    dp.register_message_handler(staff_Osh_2, commands=['Сотрудники_Ош_2'])
     dp.register_message_handler(staff_bishkek, commands=['Сотрудники_Бишкек'])
     dp.register_message_handler(staff_osh, commands=['Сотрудники_Ош'])

@@ -3,7 +3,8 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
-from keyboards import buttons
+
+import buttons
 
 from db.db_main.ORM_main import sql_staff_insert
 

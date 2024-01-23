@@ -33,9 +33,9 @@ async def super_customer_moscow_1(message: types.Message):
     await handle_super_customer(message, 'Москва_1', connection)
 
 
-async def super_customer_moscow_2(message: types.Message):
+async def super_customer_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await handle_super_customer(message, 'Москва_2', connection)
+    await handle_super_customer(message, 'Ош_2', connection)
 
 
 async def super_customer_bishkek(message: types.Message):
@@ -50,6 +50,6 @@ async def super_customer_osh(message: types.Message):
 
 def register_super_customers(dp: Dispatcher):
     dp.register_message_handler(super_customer_moscow_1, commands=['Клиенты_Москва_1'])
-    dp.register_message_handler(super_customer_moscow_2, commands=['Клиенты_Москва_2'])
+    dp.register_message_handler(super_customer_Osh_2, commands=['Клиенты_Ош_2'])
     dp.register_message_handler(super_customer_bishkek, commands=['Клиенты_Бишкек'])
     dp.register_message_handler(super_customer_osh, commands=['Клиенты_Ош'])

@@ -46,8 +46,8 @@ async def delete_products_care_command_moscow_1(message: types.Message):
     await delete_products_care_command_by_city(message, 'Москва_1')
 
 
-async def delete_products_care_command_moscow_2(message: types.Message):
-    await delete_products_care_command_by_city(message, 'Москва_2')
+async def delete_products_care_command_Osh_2(message: types.Message):
+    await delete_products_care_command_by_city(message, 'Ош_2')
 
 
 # ======================================================================================================================
@@ -64,7 +64,7 @@ def register_handler_admin(dp: Dispatcher):
     dp.register_message_handler(delete_products_care_command_bish, commands=['Удал_Прода_Bishkek'])
     dp.register_message_handler(delete_products_care_command_osh, commands=['Удал_Прода_Osh'])
     dp.register_message_handler(delete_products_care_command_moscow_1, commands=['Удал_Прода_Moscow_1'])
-    dp.register_message_handler(delete_products_care_command_moscow_2, commands=['Удал_Прода_Moscow_2'])
+    dp.register_message_handler(delete_products_care_command_Osh_2, commands=['Удал_Прода_Osh_2'])
     dp.register_callback_query_handler(complete_delete_care_products,
                                        lambda call: call.data and call.data.startswith("delete_care_pr "))
 

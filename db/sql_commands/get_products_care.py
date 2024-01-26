@@ -11,7 +11,7 @@ async def sql_command_products(message: types.Message, city_name: str, connectio
 
         if message.from_user.id in Admins or Director:
             for product in products:
-                with open(f"{product[12]}") as photo:
+                with open(f"{product[12]}", "rb") as photo:
                     await bot.send_photo(chat_id=message.from_user.id,
                                          photo=photo,
                                          caption=f"Товар: {product[13]}\n"
@@ -49,7 +49,7 @@ async def sql_command_products_moscow_1(message: types.Message):
 
 async def sql_command_products_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_products(message, 'Ош_2', connection)
+    await sql_command_products(message, 'Ош 2-филиал', connection)
 
 
 # ====================================================================================================================

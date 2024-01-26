@@ -21,7 +21,7 @@ async def salary_salesman(message: types.Message, connection, city_name: str):
                     total_prices = await connection.fetchval("SELECT SUM(total_price) FROM products_care WHERE phone_salesman = $1",
                                                              phone_salesman)
 
-                    salary = total_prices * (percentage / 100.0)
+                    salary = round(total_prices * (percentage / 100.0), 2)
 
                     await message.answer(f"Имя сотрудника: {customer[1]}\n"
                                          f"Номер телефона сотрудника: {customer[0]}\n"
@@ -50,7 +50,7 @@ async def salary_salesman_moscow_1(message: types.Message):
 
 async def salary_salesman_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await salary_salesman(message, connection, 'Ош_2')
+    await salary_salesman(message, connection, 'Ош 2-филиал')
 
 
 # ====================================================================================================================

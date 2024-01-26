@@ -16,8 +16,6 @@ connection = asyncpg.connect(POSTGRES_URL)
 
 
 class FsmCareProducts(StatesGroup):
-    # name = State()  # Название товара
-    # info_product = State()
     date_care = State()  # Дата где будут записаны уходы
     name_customer = State()
     phone_customer = State()
@@ -28,27 +26,12 @@ class FsmCareProducts(StatesGroup):
     city = State()
     articul = State()
     quantity = State()
-    # care_photo_product = State()
     submit = State()
 
 
 async def fsm_start(message: types.Message):
     await FsmCareProducts.date_care.set()
     await message.answer('Дата ухода?', reply_markup=buttons.cancel_markup)
-
-
-# async def load_name(message: types.Message, state: FSMContext):
-#     async with state.proxy() as data:
-#         data['name'] = message.text
-#     await FsmCareProducts.next()
-#     await message.answer('Информация о товаре!?')
-#
-#
-# async def load_info_product(message: types.Message, state: FSMContext):
-#     async with state.proxy() as data:
-#         data['info'] = message.text
-#     await FsmCareProducts.next()
-#     await message.answer('Дата ухода?')
 
 
 async def load_date_care(message: types.Message, state: FSMContext):
@@ -151,12 +134,15 @@ async def load_quantity(message: types.Message, state: FSMContext):
                 data['name'] = product_coming_data[0]
                 data['info'] = product_coming_data[1]
                 data['date'] = date.today()
-                with open(f"{product_coming_data[2]}") as photo:
-                    pass
-            await FsmCareProducts.next()
+
+                # Чтение содержимого файла
+                with open(f"{product_coming_data[2]}", 'rb') as photo_file:
+                    data['photo_content'] = photo_file.read()
+
+                await FsmCareProducts.next()
 
             await message.answer_photo(
-                photo=photo,
+                photo=data['photo_content'],
                 caption=f"Данные товара: \n"
                         f"АРТИКУЛ: {data['articul']}\n"
                         f"Название товара: {data['name']}\n"
@@ -171,7 +157,6 @@ async def load_quantity(message: types.Message, state: FSMContext):
                         f"Город: {data['city']}")
             await message.answer("Все верно?", reply_markup=buttons.submit_markup)
 
-
         else:
             await message.answer('Вводите только числа!')
 
@@ -179,31 +164,8 @@ async def load_quantity(message: types.Message, state: FSMContext):
         photo = open('media/404_error-h.png', 'rb')
         await message.answer_photo(photo, caption="Упс!\n"
                                                   "Вы ввели неправильный артикул\n"
-                                                  "Пожалуйста нажмите на кнопку 'Отмена'\n"
+                                                  "Пожалуйста, нажмите на кнопку 'Отмена'\n"
                                                   "И заполните заново эту запись!")
-
-
-# async def load_photo(message: types.Message, state: FSMContext):
-#     async with state.proxy() as data:
-#         data['photo'] = product_coming_data[2]
-#         data['name'] = product_coming_data[0]
-#         data['info'] = product_coming_data[1]
-#         data['date'] = date.today()
-#         await message.answer_photo(
-#             data["photo"],
-#             caption=f"Данные товара: \n"
-#                     f"АРТИКУЛ: {data['articul']}\n"
-#                     f"Название товара: {data['name']}\n"
-#                     f"Информация о товаре: {data['info']}\n"
-#                     f"Дата ухода товара: {data['date_care']}\n"
-#                     f"Заказчик: {data['name_customer']}\n"
-#                     f"Номер телефона заказчика: {data['phone_customer']}\n"
-#                     f"Продацев: {data['name_salesman']}\n"
-#                     f"Цена: {data['price']}\n"
-#                     f"Скидка: {data['discount']}\n"
-#                     f"Итоговая цена: {data['calculation']}\n"
-#                     f"Город: {data['city']}")
-#     await FsmCareProducts.next()
 
 
 async def load_submit(message: types.Message, state: FSMContext):
@@ -245,5 +207,4 @@ def register_products(dp: Dispatcher):
     dp.register_message_handler(load_city, state=FsmCareProducts.city)
     dp.register_message_handler(load_articul, state=FsmCareProducts.articul)
     dp.register_message_handler(load_quantity, state=FsmCareProducts.quantity)
-    # dp.register_message_handler(load_photo, state=FsmCareProducts.care_photo_product, content_types=['photo'])
     dp.register_message_handler(load_submit, state=FsmCareProducts.submit)

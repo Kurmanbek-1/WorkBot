@@ -14,20 +14,21 @@ async def delete_booking_by_city(message: types.Message, city: str):
         bookings = await ORM_main.sql_command_all_booking()
         for booking in bookings:
             if booking[11] == city:
-                await bot.send_photo(message.from_user.id, photo=booking[12], caption=f"Товар: {booking[1]}\n"
-                                                                                      f"Дата началда брони: {booking[2]}\n"
-                                                                                      f"Дата конца брони: {booking[3]}\n"
-                                                                                      f"Имя заказчика: {booking[4]}\n"
-                                                                                      f"Номер тел заказчика: {booking[5]}\n"
-                                                                                      f"Продавец: {booking[6]}\n"
-                                                                                      f"Номер телефона продавца: {booking[7]}\n"
-                                                                                      f"Цена(без скидки): {booking[8]}\n"
-                                                                                      f"Скидка: {booking[9]}\n"
-                                                                                      f"Итоговая цена: {booking[10]}\n"
-                                                                                      f"Город: {booking[11]}",
-                                     reply_markup=InlineKeyboardMarkup().add(
-                                         InlineKeyboardButton(f"delete {booking[0]}",
-                                                              callback_data=f"delete_booking {booking[0]}")))
+                with open(f"{booking[12]}", "rb") as photo:
+                    await bot.send_photo(message.from_user.id, photo=photo, caption=f"Товар: {booking[1]}\n"
+                                                                                          f"Дата началда брони: {booking[2]}\n"
+                                                                                          f"Дата конца брони: {booking[3]}\n"
+                                                                                          f"Имя заказчика: {booking[4]}\n"
+                                                                                          f"Номер тел заказчика: {booking[5]}\n"
+                                                                                          f"Продавец: {booking[6]}\n"
+                                                                                          f"Номер телефона продавца: {booking[7]}\n"
+                                                                                          f"Цена(без скидки): {booking[8]}\n"
+                                                                                          f"Скидка: {booking[9]}\n"
+                                                                                          f"Итоговая цена: {booking[10]}\n"
+                                                                                          f"Город: {booking[11]}",
+                                         reply_markup=InlineKeyboardMarkup().add(
+                                             InlineKeyboardButton(f"delete {booking[0]}",
+                                                                  callback_data=f"delete_booking {booking[0]}")))
 
     else:
         await message.answer("Вы не директор!")
@@ -48,7 +49,7 @@ async def delete_booking_Moscow_1(message: types.Message):
 
 
 async def delete_booking_Osh_2(message: types.Message):
-    await delete_booking_by_city(message, 'Ош_2')
+    await delete_booking_by_city(message, 'Ош 2-филиал')
 
 
 

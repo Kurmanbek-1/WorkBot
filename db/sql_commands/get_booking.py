@@ -13,17 +13,18 @@ async def sql_command_booking(message: types.Message, city: str, connection):
 
         for booking in bookings:
             if message.from_user.id in Admins or Director:
-                await bot.send_photo(message.from_user.id, photo=booking[12], caption=f"Товар: {booking[1]}\n"
-                                                                                      f"Дата началда брони: {booking[2]}\n"
-                                                                                      f"Дата конца брони: {booking[3]}\n"
-                                                                                      f"Имя заказчика: {booking[4]}\n"
-                                                                                      f"Номер тел заказчика: {booking[5]}\n"
-                                                                                      f"Продавец: {booking[6]}\n"
-                                                                                      f"Номер телефона продавца: {booking[7]}\n"
-                                                                                      f"Цена(без скидки): {booking[8]}\n"
-                                                                                      f"Скидка: {booking[9]}\n"
-                                                                                      f"Итоговая цена: {booking[10]}\n"
-                                                                                      f"Город: {booking[11]}")
+                with open(f"{booking[12]}", "rb") as photo:
+                    await bot.send_photo(message.from_user.id, photo=photo, caption=f"Товар: {booking[1]}\n"
+                                                                                          f"Дата началда брони: {booking[2]}\n"
+                                                                                          f"Дата конца брони: {booking[3]}\n"
+                                                                                          f"Имя заказчика: {booking[4]}\n"
+                                                                                          f"Номер тел заказчика: {booking[5]}\n"
+                                                                                          f"Продавец: {booking[6]}\n"
+                                                                                          f"Номер телефона продавца: {booking[7]}\n"
+                                                                                          f"Цена(без скидки): {booking[8]}\n"
+                                                                                          f"Скидка: {booking[9]}\n"
+                                                                                          f"Итоговая цена: {booking[10]}\n"
+                                                                                          f"Город: {booking[11]}")
             else:
                 await message.answer('Вы не админ!')
 
@@ -45,7 +46,7 @@ async def sql_command_booking_moscow_1(message: types.Message):
 
 async def sql_command_booking_Osh_2(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_booking(message, 'Ош_2', connection)
+    await sql_command_booking(message, 'Ош 2-филиал', connection)
 
 
 # ====================================================================================================================

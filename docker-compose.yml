@@ -1,27 +1,36 @@
-version: '3.3'
+version: '3.9'
 
 services:
   bot:
-    container_name: work_bot
-    restart: always
+    container_name: osor_work_bot
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /opt/services/bot/work-bot
-    environment:
-      - POSTGRES_DB=OSOR_DB
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=238484
-      - POSTGRES_HOST=db  # Используйте имя сервиса базы данных в качестве хоста
-      - POSTGRES_PORT=5432
-    depends_on:
-      - db
+      - ..:/app/ess-backend
+    command: "sh /app/osor_work_bot/entrypoints/start_bot.sh"
+    env_file:
+      - .env
+    networks:
+      - db_network
+      - shared_network
 
-  db:
-    image: postgres
-    environment:
-      POSTGRES_DB: OSOR_DB
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 238484
-    # Опционально: expose не требуется, так как сервисы могут общаться между собой по именам
+  postgres:
+    image: postgres:13.3
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    networks:
+      - db_network
+      - shared_network
+    env_file:
+      - .env
+    volumes:
+      - ../storage:/var/lib/postgresql/data
+
+networks:
+  db_network:
+    driver: bridge
+  shared_network:
+    external: true

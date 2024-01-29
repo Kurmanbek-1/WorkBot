@@ -3,8 +3,6 @@ from aiogram import types, Dispatcher
 from config import bot, Admins, Director, POSTGRES_URL
 import asyncpg
 
-
-
 # ====================================================================================================================
 
 async def sql_command_booking(message: types.Message, city: str, connection):

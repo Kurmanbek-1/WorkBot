@@ -9,6 +9,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ..:/app/ess-backend
+      - ../media:/app/ess-backend/media
     command: "sh /app/osor_work_bot/entrypoints/start_bot.sh"
     env_file:
       - .env

@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ..:/app/osor_work_bot
+      - ../:/app/osor_work_bot
       - ../media:/app/osor_work_bot/media
     command: "sh /app/osor_work_bot/entrypoints/start_bot.sh"
     env_file:

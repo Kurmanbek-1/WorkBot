@@ -1,27 +1,27 @@
-version: '3.3'
+version: '3'
 
 services:
   bot:
+    depends_on:
+      - postgres_compass
+    build: .
     container_name: work_bot
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - /opt/services/bot/work-bot
-    environment:
-      - POSTGRES_DB=OSOR_DB
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=238484
-      - POSTGRES_HOST=db  # Используйте имя сервиса базы данных в качестве хоста
-      - POSTGRES_PORT=5432
-    depends_on:
-      - db
+    command: python main.py
+    networks:
+      - bot_network
 
-  db:
-    image: postgres
+  postgres_compass:
+    image: postgres:latest
+    container_name: postgres_container_compass
+    restart: always
     environment:
-      POSTGRES_DB: OSOR_DB
+      POSTGRES_DB: osor_tg_bot
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 238484
-    # Опционально: expose не требуется, так как сервисы могут общаться между собой по именам
+      POSTGRES_PASSWORD: 123
+    networks:
+      - bot_network
+
+
+networks:
+  bot_network:

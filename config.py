@@ -14,6 +14,8 @@ bot = Bot(TOKEN)
 
 dp = Dispatcher(bot=bot, storage=storage)
 
-POSTGRES_URL = "postgresql://postgres:123@127.0.0.1:5432/osor_tg_bot"
+POSTGRES_URL = "postgresql://postgres:123@postgres_compass:5432/osor_tg_bot"
+
+
 DESTINATION = config('DESTINATION')
 data_b = Database(POSTGRES_URL)

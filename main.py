@@ -16,6 +16,7 @@ import buttons
 from config import data_b
 
 
+
 # ===========================================================================
 async def on_startup(_):
     for i in Admins:
@@ -23,6 +24,7 @@ async def on_startup(_):
     # await bot.send_message(chat_id=Director[0], text="Бот запущен!", reply_markup=buttons.start_director_markup)
     await data_b.connect()
     await create_tables()
+
 
 
 # async def on_shutdown(_):

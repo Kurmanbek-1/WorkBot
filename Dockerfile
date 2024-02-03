@@ -14,9 +14,9 @@ COPY requirements.txt /opt/services/bot/work-bot/requirements/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Удаляем предыдущие переменные окружения для PostgreSQL, они теперь задаются в Docker Compose
-ENV POSTGRES_DB "OSOR_DB"
+ENV POSTGRES_DB "osor_tg_bot"
 ENV POSTGRES_USER "postgres"
-ENV POSTGRES_PASSWORD "238484"
+ENV POSTGRES_PASSWORD "123"
 ENV POSTGRES_HOST "localhost"
 ENV POSTGRES_PORT "5432"
 

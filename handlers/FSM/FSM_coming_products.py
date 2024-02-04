@@ -6,7 +6,7 @@ from aiogram.dispatcher.filters import Text
 import buttons
 import os
 import asyncpg
-from config import POSTGRES_URL, DESTINATION, bot
+from config import POSTGRES_URL, bot
 from datetime import datetime
 from db.db_main.ORM_main import sql_product_coming_insert
 
@@ -108,7 +108,6 @@ async def load_quantity(message: types.Message, state: FSMContext):
 
 async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-
         photo_id = message.photo[-1].file_id
         file_photo = await bot.get_file(photo_id)
 

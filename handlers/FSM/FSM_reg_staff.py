@@ -3,9 +3,9 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
-
+from config import bot
 import buttons
-
+import os
 from db.db_main.ORM_main import sql_staff_insert
 
 from datetime import datetime
@@ -74,16 +74,29 @@ async def load_city(message: types.Message, state: FSMContext):
 
 async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data['photo'] = message.photo[-1].file_id
-        data['date'] = datetime.now()
-        await message.answer_photo(
-            data["photo"],
-            caption=f'Данные: \n'
-                    f'ФИО: {data["full_name"]}\n'
-                    f'Номер телефона: {data["phone"]}\n'
-                    f'Информация о сотруднике: {data["info"]}'
-                    f'График: {data["schedule"]}\n'
-                    f'Город: {data["city"]}')
+        photo_id = message.photo[-1].file_id
+        file_photo = await bot.get_file(photo_id)
+
+        filename, file_extencion = os.path.splitext(file_photo.file_path)
+
+        downloaded_file_photo = await bot.download_file(file_photo.file_path)
+
+        src = '/path/in/container/' + photo_id + file_extencion
+
+        with open(src, 'wb') as new_file:
+            new_file.write(downloaded_file_photo.read())
+
+            with open(src, "rb") as photo:
+                data['photo'] = src
+                data['date'] = datetime.now()
+                await message.answer_photo(
+                    photo=photo,
+                    caption=f'Данные: \n'
+                            f'ФИО: {data["full_name"]}\n'
+                            f'Номер телефона: {data["phone"]}\n'
+                            f'Информация о сотруднике: {data["info"]}'
+                            f'График: {data["schedule"]}\n'
+                            f'Город: {data["city"]}')
     await fsm_reg_staff.next()
     await message.answer("Все верно?", reply_markup=buttons.submit_markup)
 

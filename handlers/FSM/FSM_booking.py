@@ -4,7 +4,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 import buttons
-
+from config import bot
+import os
 from db.db_main.ORM_main import sql_booking_insert
 from datetime import datetime
 
@@ -126,23 +127,35 @@ async def load_city(message: types.Message, state: FSMContext):
 
 async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data['photo'] = message.photo[-1].file_id
-        data['date'] = datetime.now()
-        await message.answer_photo(
-            data["photo"],
-            caption=f"Данные брони: \n"
-                    f"Название товара: {data['name_product']}\n"
-                    f"Начало брони: {data['start_of_armor']}\n"
-                    f"Конец брони: {data['end_of_armor']}\n"
-                    f"Заказчик: {data['name_customer']}\n"
-                    f"Номер телефона заказчика: {data['phone_customer']}\n"
-                    f"Продацев: {data['name_salesman']}\n"
-                    f"Цена: {data['price']}\n"
-                    f"Скидка: {data['discount']}\n"
-                    f"Итоговая цена: {data['calculation']}\n"
-                    f"Город: {data['city']}\n\n"
-                    f"‼️Внимание! "
-                    f"Если вы записали бронь, то после продажи вы должны его записать как проданную(Заполнить в проданных)")
+        photo_id = message.photo[-1].file_id
+        file_photo = await bot.get_file(photo_id)
+
+        filename, file_extencion = os.path.splitext(file_photo.file_path)
+
+        downloaded_file_photo = await bot.download_file(file_photo.file_path)
+
+        src = '/path/in/container/' + photo_id + file_extencion
+
+        with open(src, 'wb') as new_file:
+            new_file.write(downloaded_file_photo.read())
+            data['photo'] = src
+            data['date'] = datetime.now()
+            with open(src, "rb") as photo:
+                await message.answer_photo(
+                    photo=photo,
+                    caption=f"Данные брони: \n"
+                            f"Название товара: {data['name_product']}\n"
+                            f"Начало брони: {data['start_of_armor']}\n"
+                            f"Конец брони: {data['end_of_armor']}\n"
+                            f"Заказчик: {data['name_customer']}\n"
+                            f"Номер телефона заказчика: {data['phone_customer']}\n"
+                            f"Продацев: {data['name_salesman']}\n"
+                            f"Цена: {data['price']}\n"
+                            f"Скидка: {data['discount']}\n"
+                            f"Итоговая цена: {data['calculation']}\n"
+                            f"Город: {data['city']}\n\n"
+                            f"‼️Внимание! "
+                            f"Если вы записали бронь, то после продажи вы должны его записать как проданную(Заполнить в проданных)")
     await fsm_booking_coming.next()
     await message.answer("Все верно?", reply_markup=buttons.submit_markup)
 

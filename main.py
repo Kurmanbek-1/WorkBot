@@ -1,7 +1,7 @@
 from aiogram.utils import executor
 import logging
 
-from config import dp, bot, Admins, Developers
+from config import dp, bot, Developers
 from handlers import commands
 from handlers.FSM import (FSM_coming_products, FSM_care_products, FSM_booking, FSM_reg_staff, FSM_being_late)
 from db.sql_commands import Products_Coming_Category
@@ -16,14 +16,12 @@ import buttons
 from config import data_b
 
 
-
 # ===========================================================================
 async def on_startup(_):
     for i in Developers:
         await bot.send_message(chat_id=i, text="Бот запущен!", reply_markup=buttons.start_admins_markup)
     await data_b.connect()
     await create_tables()
-
 
 
 # ===========================================================================

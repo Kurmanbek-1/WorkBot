@@ -4,6 +4,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 import buttons
+import logging
 
 import asyncpg
 from config import POSTGRES_URL, DESTINATION
@@ -12,6 +13,13 @@ from db.db_main.ORM_main import sql_product_coming_insert
 
 # =======================================================================================================================
 
+
+logging.basicConfig(
+    level=logging.INFO,  # Вы можете изменить уровень логирования по вашему усмотрению
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logger = logging.getLogger(__name__)
 
 global connection
 connection = asyncpg.connect(POSTGRES_URL)
@@ -106,40 +114,49 @@ async def load_quantity(message: types.Message, state: FSMContext):
         await message.answer('Вводите только числа!')
 
 
+# Пример добавления логирования в load_photo
 async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        path = await message.photo[-1].download(destination=DESTINATION)
-        with open(f"{path.name}", "rb") as photo:
-            data['photo'] = path.name
-            data['date'] = datetime.now()
-            print(path.name)
-            await message.answer_photo(
-                photo=photo,
-                caption=f"Данные товара: \n"
-                        f"АРТИКУЛ: {data['articul']}\n"
-                        f"Название товара: {data['name']}\n"
-                        f"Информация о товаре: {data['info']}\n"
-                        f"Дата прихода товара: {data['date_coming']}\n"
-                        f"Количество товара: {data['quantity']}\n"
-                        f"Категория товара: {data['category']}\n"
-                        f"Цена: {data['price']}\n"
-                        f"Город: {data['city']}")
+        try:
+            photo = message.photo[-1]
+            photo_path = f"{DESTINATION}/{photo.file_id}.jpg"
+            path = await photo.download(destination=photo_path)
+
+            with open(f"{path.name}", "rb") as photo:
+                data['photo'] = path.name
+                data['date'] = datetime.now()
+                logger.info(f"File downloaded successfully: {path.name}")
+                await message.answer_photo(
+                    photo=photo,
+                    caption=f"Данные товара: \n"
+                            f"АРТИКУЛ: {data['articul']}\n"
+                            f"Название товара: {data['name']}\n"
+                            f"Информация о товаре: {data['info']}\n"
+                            f"Дата прихода товара: {data['date_coming']}\n"
+                            f"Количество товара: {data['quantity']}\n"
+                            f"Категория товара: {data['category']}\n"
+                            f"Цена: {data['price']}\n"
+                            f"Город: {data['city']}")
+        except Exception as e:
+            logger.error(f"Error during file download: {e}")
+            await message.answer("Произошла ошибка при загрузке файла. Попробуйте еще раз.")
     await fsm_products.next()
     await message.answer("Все верно?", reply_markup=buttons.submit_markup)
+
 
 
 async def load_submit(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         if message.text.lower() == 'да':
+            logger.info("Before calling sql_product_coming_insert")
             await sql_product_coming_insert(state)
+            logger.info("After calling sql_product_coming_insert")
             await message.answer('Готово!', reply_markup=buttons.data_recording_markup)
             await state.finish()
-
-
-
         elif message.text.lower() == 'нет':
             await message.answer('Хорошо, отменено', reply_markup=buttons.data_recording_markup)
             await state.finish()
+
 
 
 async def cancel_reg(message: types.Message, state: FSMContext):

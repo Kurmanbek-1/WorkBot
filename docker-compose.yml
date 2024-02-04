@@ -4,7 +4,7 @@ services:
   work_bot:
     depends_on:
       - postgres_compass
-    build: C:\\projects\\WorkBot
+    build: /root/test/WorkBot
     container_name: work_bot
     restart: always
     command: python main.py
@@ -16,7 +16,7 @@ services:
   osor_client_bot:
     depends_on:
       - work_bot
-    build: C:\\projects\\ClientBotOSOR
+    build: /root/test/ClientBotOSOR
     container_name: osor_client_bot
     restart: always
     command: python main.py

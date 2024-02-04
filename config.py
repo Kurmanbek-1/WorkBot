@@ -7,15 +7,15 @@ storage = MemoryStorage()
 
 TOKEN = config("TOKEN")
 
-Admins = [995712956, ]
+Admins = [659106628, ]
 
-Director = [6451475162, ]
+Director = [659106628, ]
 bot = Bot(TOKEN)
 
 dp = Dispatcher(bot=bot, storage=storage)
 
-POSTGRES_URL = "postgresql://postgres:123@localhost:5432/osor_tg_bot"
+POSTGRES_URL = "postgresql://postgres:123@postgres_compass:5432/osor_tg_bot"
 
 
-DESTINATION = config('DESTINATION')
+DESTINATION = "/app/media"
 data_b = Database(POSTGRES_URL)

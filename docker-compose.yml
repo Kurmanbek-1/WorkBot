@@ -1,15 +1,29 @@
 version: '3'
 
 services:
-  bot:
+  work_bot:
     depends_on:
       - postgres_compass
-    build: .
+    build: C:\\projects\\WorkBot
     container_name: work_bot
     restart: always
     command: python main.py
     networks:
       - bot_network
+    volumes:
+      - my_shared_volume:/path/in/container  # Используем общий том в контейнере work_bot
+
+  osor_client_bot:
+    depends_on:
+      - work_bot
+    build: C:\\projects\\ClientBotOSOR
+    container_name: osor_client_bot
+    restart: always
+    command: python main.py
+    networks:
+      - bot_network
+    volumes:
+      - my_shared_volume:/path/in/container  # Используем общий том в контейнере osor_client_bot
 
   postgres_compass:
     image: postgres:latest
@@ -22,6 +36,8 @@ services:
     networks:
       - bot_network
 
-
 networks:
   bot_network:
+
+volumes:
+  my_shared_volume:  # Определение общего тома

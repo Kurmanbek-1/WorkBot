@@ -4,9 +4,9 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.filters import Text
 import buttons
-
+import os
 import asyncpg
-from config import POSTGRES_URL, DESTINATION
+from config import POSTGRES_URL, DESTINATION, bot
 from datetime import datetime
 from db.db_main.ORM_main import sql_product_coming_insert
 
@@ -108,22 +108,33 @@ async def load_quantity(message: types.Message, state: FSMContext):
 
 async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        path = await message.photo[-1].download(destination=DESTINATION)
-        with open(f"{path.name}", "rb") as photo:
-            data['photo'] = path.name
-            data['date'] = datetime.now()
-            print(path.name)
-            await message.answer_photo(
-                photo=photo,
-                caption=f"Данные товара: \n"
-                        f"АРТИКУЛ: {data['articul']}\n"
-                        f"Название товара: {data['name']}\n"
-                        f"Информация о товаре: {data['info']}\n"
-                        f"Дата прихода товара: {data['date_coming']}\n"
-                        f"Количество товара: {data['quantity']}\n"
-                        f"Категория товара: {data['category']}\n"
-                        f"Цена: {data['price']}\n"
-                        f"Город: {data['city']}")
+
+        photo_id = message.photo[-1].file_id
+        file_photo = await bot.get_file(photo_id)
+
+        filename, file_extencion = os.path.splitext(file_photo.file_path)
+
+        downloaded_file_photo = await bot.download_file(file_photo.file_path)
+
+        src = '/path/in/container/' + photo_id + file_extencion
+
+        with open(src, 'wb') as new_file:
+            new_file.write(downloaded_file_photo.read())
+
+            with open(src, "rb") as photo:
+                data['photo'] = src
+                data['date'] = datetime.now()
+                await message.answer_photo(
+                    photo=photo,
+                    caption=f"Данные товара: \n"
+                            f"АРТИКУЛ: {data['articul']}\n"
+                            f"Название товара: {data['name']}\n"
+                            f"Информация о товаре: {data['info']}\n"
+                            f"Дата прихода товара: {data['date_coming']}\n"
+                            f"Количество товара: {data['quantity']}\n"
+                            f"Категория товара: {data['category']}\n"
+                            f"Цена: {data['price']}\n"
+                            f"Город: {data['city']}")
     await fsm_products.next()
     await message.answer("Все верно?", reply_markup=buttons.submit_markup)
 

@@ -8,7 +8,7 @@ import os
 import asyncpg
 from config import POSTGRES_URL, DESTINATION
 
-cities = ['Бишкек', 'ОШ', 'Москва 1-филиал', 'Ош 2-филиал']
+cities = ['Бишкек', 'ОШ', 'Москва']
 categories = ["/Обувь", "/Нижнее_белье", "/Акссесуары", "/Верхняя_одежда", "/Штаны"]
 
 
@@ -57,9 +57,7 @@ async def load_category(message: types.Message, state: FSMContext):
                 products = await get_product_from_category(pool=pool, category=category, city=city)
             elif city == "ОШ":
                 products = await get_product_from_category(pool=pool, category=category, city=city)
-            elif city == "Москва 1-филиал":
-                products = await get_product_from_category(pool=pool, category=category, city=city)
-            elif city == "Ош 2-филиал":
+            elif city == "Москва":
                 products = await get_product_from_category(pool=pool, category=category, city=city)
 
             for product in products:

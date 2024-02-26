@@ -41,12 +41,7 @@ async def sql_command_booking_osh(message: types.Message):
 
 async def sql_command_booking_moscow_1(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_booking(message, 'Москва_1', connection)
-
-
-async def sql_command_booking_Osh_2(message: types.Message):
-    connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_booking(message, 'Ош 2-филиал', connection)
+    await sql_command_booking(message, 'Москва', connection)
 
 
 # ====================================================================================================================
@@ -54,5 +49,4 @@ async def sql_command_booking_Osh_2(message: types.Message):
 def register_sql_commands(dp: Dispatcher):
     dp.register_message_handler(sql_command_booking_bishkek, commands=['Брони_Бишкек'])
     dp.register_message_handler(sql_command_booking_osh, commands=['Брони_Ош'])
-    dp.register_message_handler(sql_command_booking_moscow_1, commands=['Брони_Москва_1'])
-    dp.register_message_handler(sql_command_booking_Osh_2, commands=['Брони_Ош_2'])
+    dp.register_message_handler(sql_command_booking_moscow_1, commands=['Брони_Москва'])

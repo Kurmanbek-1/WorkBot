@@ -86,22 +86,13 @@ async def control_osh_month(message: types.Message):
 
 async def control_day_moscow_1(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_day(message, 'Москва_1', connection)
+    await control_day(message, 'Москва', connection)
 
 
 async def control_moscow_1_month(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_month(message, 'Москва_1', connection)
+    await control_month(message, 'Москва', connection)
 
-
-async def control_day_Osh_2(message: types.Message):
-    connection = await asyncpg.connect(POSTGRES_URL)
-    await control_day(message, 'Ош 2-филиал', connection)
-
-
-async def control_Osh_2_month(message: types.Message):
-    connection = await asyncpg.connect(POSTGRES_URL)
-    await control_month(message, 'Ош 2-филиал', connection)
 
 
 
@@ -149,13 +140,7 @@ async def control_week_osh(message: types.Message):
 
 async def control_week_moscow_1(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_week(message, 'Москва_1', connection)
-
-
-async def control_week_Osh_2(message: types.Message):
-    connection = await asyncpg.connect(POSTGRES_URL)
-    await control_week(message, 'Ош 2-филиал', connection)
-
+    await control_week(message, 'Москва', connection)
 
 
 def register_control(dp: Dispatcher):
@@ -168,10 +153,6 @@ def register_control(dp: Dispatcher):
     dp.register_message_handler(control_moscow_1_month, commands=['Отчет_за_месяц_М_1'])
     dp.register_message_handler(control_day_moscow_1, commands=["Отчет_за_день_М_1"])
 
-    dp.register_message_handler(control_Osh_2_month, commands=['Отчет_за_месяц_Ош_2'])
-    dp.register_message_handler(control_day_Osh_2, commands=["Отчет_за_день_Ош_2"])
-
     dp.register_message_handler(control_week_bish, commands=['Отчет_за_неделю_Б'])
     dp.register_message_handler(control_week_osh, commands=['Отчет_за_неделю_Ош'])
     dp.register_message_handler(control_week_moscow_1, commands=['Отчет_за_неделю_М_1'])
-    dp.register_message_handler(control_week_Osh_2, commands=['Отчет_за_неделю_Ош_2'])

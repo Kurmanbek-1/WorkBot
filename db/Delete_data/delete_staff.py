@@ -36,11 +36,7 @@ async def delete_staff_osh(message: types.Message):
 
 
 async def delete_staff_Mescow_1(message: types.Message):
-    await delete_staff_by_city(message, 'Москва_1')
-
-
-async def delete_staff_Osh_2(message: types.Message):
-    await delete_staff_by_city(message, 'Ош 2-филиал')
+    await delete_staff_by_city(message, 'Москва')
 
 
 # ======================================================================================================================
@@ -56,7 +52,6 @@ async def complete_delete_staff(call: types.CallbackQuery):
 def register_handler_admin(dp: Dispatcher):
     dp.register_message_handler(delete_staff_bish, commands=['Удал_Сотруд_Bishkek'])
     dp.register_message_handler(delete_staff_osh, commands=['Удал_Сотруд_Osh'])
-    dp.register_message_handler(delete_staff_Mescow_1, commands=['Удал_Сотруд_Moscow_1'])
-    dp.register_message_handler(delete_staff_Osh_2, commands=['Удал_Сотруд_Osh_2'])
+    dp.register_message_handler(delete_staff_Mescow_1, commands=['Удал_Сотруд_Moscow'])
     dp.register_callback_query_handler(complete_delete_staff,
                                        lambda call: call.data and call.data.startswith("delete_staff "))

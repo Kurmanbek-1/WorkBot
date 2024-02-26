@@ -19,8 +19,7 @@ async def start(message: types.Message):
 async def support(message: types.Message):
     await message.answer('Тех поддержка:\n\n'
                          'Бишкек: +996221825236n\n'
-                         'Ош: +996559618881\n'
-                         '')
+                         'Ош: +996559618881\n')
 
 
 async def info(message: types.Message):
@@ -119,16 +118,10 @@ async def get_osh(message: types.Message):
 
 async def get_moscow_1(message: types.Message):
     if message.from_user.id in Admins or Director:
-        await message.answer(f"Вы выбрали Москву! (Первый филиал)", reply_markup=buttons.get_branches_moscow_1_markup)
+        await message.answer(f"Вы выбрали Москву!", reply_markup=buttons.get_branches_moscow_1_markup)
     else:
         await message.answer("Вы не админ!")
 
-
-async def get_Osh_2(message: types.Message):
-    if message.from_user.id in Admins or Director:
-        await message.answer(f"Вы выбрали Ош! (Второй филиал)", reply_markup=buttons.get_branches_moscow_2_markup)
-    else:
-        await message.answer("Вы не админ!")
 
 # ====================================================================================================================
 
@@ -211,9 +204,6 @@ async def Moscow_1_delete_button(message: types.Message):
     await message.answer("Выберите снизу из кнопок ⬇", reply_markup=buttons.moscow_1_delete_markup)
 
 
-async def Osh_2_delete_button(message: types.Message):
-    await message.answer("Выберите снизу из кнопок ⬇", reply_markup=buttons.Osh_2_delete_markup)
-
 
 """----------"""
 
@@ -258,8 +248,7 @@ def register_commands(dp: Dispatcher):
 # ====================================================================================================================
     dp.register_message_handler(get_bishkek, commands=['Бишкек'])
     dp.register_message_handler(get_osh, commands=['Ош'])
-    dp.register_message_handler(get_moscow_1, commands=['Москва_1'])
-    dp.register_message_handler(get_Osh_2, commands=['Ош_2'])
+    dp.register_message_handler(get_moscow_1, commands=['Москва'])
 # ====================================================================================================================
 
     dp.register_message_handler(DeleteButton, commands=['Удаление_из_базы'])
@@ -267,7 +256,6 @@ def register_commands(dp: Dispatcher):
     dp.register_message_handler(Bish_delete_button, commands=["Бишкек_удаление"])
     dp.register_message_handler(Osh_delete_button, commands=["Ош_удаление"])
     dp.register_message_handler(Moscow_1_delete_button, commands=["Москва_1_удаление"])
-    dp.register_message_handler(Osh_2_delete_button, commands=["Ош_2_удаление"])
 
     dp.register_message_handler(back_for_staff, commands=['<-назад'])
     dp.register_message_handler(back_for_admins, commands=['<назад'])

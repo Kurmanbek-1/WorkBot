@@ -53,17 +53,9 @@ async def super_customer_bishkek(message: types.Message):
 async def super_customer_moscow_1(message: types.Message):
     try:
         connection = await asyncpg.connect(POSTGRES_URL)
-        await handle_super_customer(message, 'Москва_1', connection)
+        await handle_super_customer(message, 'Москва', connection)
     except Exception as e:
         print(f"Error in super_customer_moscow_1: {e}")
-
-
-async def super_customer_Osh_2(message: types.Message):
-    try:
-        connection = await asyncpg.connect(POSTGRES_URL)
-        await handle_super_customer(message, 'Ош 2-филиал', connection)
-    except Exception as e:
-        print(f"Error in super_customer_Osh_2: {e}")
 
 
 async def super_customer_osh(message: types.Message):
@@ -75,7 +67,6 @@ async def super_customer_osh(message: types.Message):
 
 
 def register_super_customers(dp: Dispatcher):
-    dp.register_message_handler(super_customer_moscow_1, commands=['Клиенты_Москва_1'])
-    dp.register_message_handler(super_customer_Osh_2, commands=['Клиенты_Ош_2'])
+    dp.register_message_handler(super_customer_moscow_1, commands=['Клиенты_Москва'])
     dp.register_message_handler(super_customer_bishkek, commands=['Клиенты_Бишкек'])
     dp.register_message_handler(super_customer_osh, commands=['Клиенты_Ош'])

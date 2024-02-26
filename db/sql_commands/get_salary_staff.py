@@ -45,12 +45,7 @@ async def salary_salesman_osh(message: types.Message):
 
 async def salary_salesman_moscow_1(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await salary_salesman(message, connection, 'Москва_1')
-
-
-async def salary_salesman_Osh_2(message: types.Message):
-    connection = await asyncpg.connect(POSTGRES_URL)
-    await salary_salesman(message, connection, 'Ош 2-филиал')
+    await salary_salesman(message, connection, 'Москва')
 
 
 # ====================================================================================================================
@@ -58,5 +53,4 @@ async def salary_salesman_Osh_2(message: types.Message):
 def register_sql_commands(dp: Dispatcher):
     dp.register_message_handler(salary_salesman_bishkek, commands=['ЗП_Бишкек'])
     dp.register_message_handler(salary_salesman_osh, commands=['ЗП_Ош'])
-    dp.register_message_handler(salary_salesman_moscow_1, commands=['ЗП_Москва_1'])
-    dp.register_message_handler(salary_salesman_Osh_2, commands=['ЗП_Ош_2'])
+    dp.register_message_handler(salary_salesman_moscow_1, commands=['ЗП_Москва'])

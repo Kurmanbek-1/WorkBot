@@ -31,6 +31,7 @@ async def delete_products_coming_command_by_city(message: types.Message, city: s
                                                                   callback_data=f"delete_com_pr {product[0]}")))
                 else:
                     print(f"Файл не найден: {photo_path}")
+
     else:
         await message.answer("You not Director!")
 

@@ -32,7 +32,7 @@ async def delete_staff_bish(message: types.Message):
 
 
 async def delete_staff_osh(message: types.Message):
-    await delete_staff_by_city(message, 'ОШ')
+    await delete_staff_by_city(message, 'Ош')
 
 
 async def delete_staff_Mescow_1(message: types.Message):

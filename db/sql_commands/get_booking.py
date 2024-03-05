@@ -36,7 +36,7 @@ async def sql_command_booking_bishkek(message: types.Message):
 
 async def sql_command_booking_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_booking(message, 'ОШ', connection)
+    await sql_command_booking(message, 'Ош', connection)
 
 
 async def sql_command_booking_moscow_1(message: types.Message):

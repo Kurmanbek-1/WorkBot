@@ -29,7 +29,7 @@ async def sql_being_late_bishkek(message: types.Message):
 
 async def sql_being_late_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_being_late(message, 'ОШ', connection)
+    await sql_being_late(message, 'Ош', connection)
 
 
 async def sql_being_late_moscow_1(message: types.Message):

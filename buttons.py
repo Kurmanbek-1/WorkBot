@@ -173,22 +173,32 @@ cancel_markup = ReplyKeyboardMarkup(resize_keyboard=True,
                                     one_time_keyboard=True,
                                     ).add(cancel_button)
 
-cancel_button_category = KeyboardButton('/сancel')
-cancel_markup_category = ReplyKeyboardMarkup(resize_keyboard=True,
-                                    one_time_keyboard=True,
-                                    ).add(cancel_button_category)
+# cancel_button_category = KeyboardButton('/сancel')
+# cancel_markup_category = ReplyKeyboardMarkup(resize_keyboard=True,
+#                                     one_time_keyboard=True,
+#                                     ).add(cancel_button_category)
 
 submit_markup = ReplyKeyboardMarkup(resize_keyboard=True,
                                     one_time_keyboard=True
                                     ).add(KeyboardButton('да'),
                                           KeyboardButton('нет'))
 
+
 city_markup = ReplyKeyboardMarkup(resize_keyboard=True,
                                   one_time_keyboard=True,
                                   row_width=2
                                   ).add(KeyboardButton('Бишкек'),
-                                        KeyboardButton('ОШ'),
-                                        KeyboardButton('Москва'))
+                                        KeyboardButton('Ош'),
+                                        KeyboardButton('Москва'),
+                                        KeyboardButton('/Cancel'))
+
+city_categories = ReplyKeyboardMarkup(resize_keyboard=True,
+                                  one_time_keyboard=True,
+                                  row_width=2
+                                  ).add(KeyboardButton('Бишкек'),
+                                        KeyboardButton('Ош'),
+                                        KeyboardButton('Москва'),
+                                        KeyboardButton('Отмена!'))
 # ===========================================================================
 """--------ДЛЯ ДИРЕКТОРА-----------------"""
 start_director_markup = ReplyKeyboardMarkup(
@@ -260,8 +270,21 @@ m2 = KeyboardButton('/Нижнее_белье')
 m3 = KeyboardButton('/Акссесуары')
 m4 = KeyboardButton('/Верхняя_одежда')
 m5 = KeyboardButton('/Штаны')
+m6 = KeyboardButton('/Cancel')
 
-CategoryButtons.add(m1, m2, m3, m4, m5, cancel_button_category)
+CategoryButtons.add(m1, m2, m3, m4, m5, m6)
+
+Category = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, row_width=2)
+
+m1 = KeyboardButton('/Обувь')
+m2 = KeyboardButton('/Нижнее_белье')
+m3 = KeyboardButton('/Акссесуары')
+m4 = KeyboardButton('/Верхняя_одежда')
+m5 = KeyboardButton('/Штаны')
+m6 = KeyboardButton('Отмена!')
+
+Category.add(m1, m2, m3, m4, m5, m6)
+
 
 Buttons_for_categories = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, row_width=2)
 

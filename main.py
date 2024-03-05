@@ -33,7 +33,7 @@ FSM_booking.register_booking(dp)
 FSM_reg_staff.register_staff(dp)
 FSM_being_late.register_control(dp)
 
-Products_Coming_Category.register_fsm_comitCategory(dp)
+Products_Coming_Category.register_all_products(dp)
 
 # =====================================================
 get_products_care.register_sql_commands(dp)

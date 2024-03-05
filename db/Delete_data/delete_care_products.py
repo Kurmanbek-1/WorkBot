@@ -40,7 +40,7 @@ async def delete_products_care_command_bish(message: types.Message):
 
 
 async def delete_products_care_command_osh(message: types.Message):
-    await delete_products_care_command_by_city(message, 'ОШ')
+    await delete_products_care_command_by_city(message, 'Ош')
 
 
 async def delete_products_care_command_moscow_1(message: types.Message):

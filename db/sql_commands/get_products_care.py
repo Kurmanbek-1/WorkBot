@@ -39,7 +39,7 @@ async def sql_command_products_bish(message: types.Message):
 
 async def sql_command_products_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_products(message, 'ОШ', connection)
+    await sql_command_products(message, 'Ош', connection)
 
 
 async def sql_command_products_moscow_1(message: types.Message):

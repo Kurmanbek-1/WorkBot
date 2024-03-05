@@ -6,12 +6,12 @@ from db.db_psql.db_osor import Database
 
 # =============================================================
 # Токен для тестов
-# TOKEN = "6570711981:AAGo0p436G80I_ziI24xTQblz3Z-LhPnM5w"
+TOKEN = "6570711981:AAGo0p436G80I_ziI24xTQblz3Z-LhPnM5w"
 # =============================================================
 
 
 storage = MemoryStorage()
-TOKEN = config('TOKEN')
+# TOKEN = config('TOKEN')
 bot = Bot(TOKEN)
 dp = Dispatcher(bot=bot, storage=storage)
 
@@ -28,4 +28,5 @@ DATABASE = config('DATABASE')
 
 POSTGRES_URL = f"postgresql://{PostgresUser}:{PostgresPassword}@{ip}/{DATABASE}"
 DESTINATION = "/app/media"
+
 data_b = Database(POSTGRES_URL)

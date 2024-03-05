@@ -35,7 +35,7 @@ async def staff_bishkek(message: types.Message):
 
 async def staff_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await sql_command_staff(message, 'ОШ', connection)
+    await sql_command_staff(message, 'Ош', connection)
 
 
 def register_sql_commands(dp: Dispatcher):

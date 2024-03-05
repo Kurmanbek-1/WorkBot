@@ -61,7 +61,7 @@ async def super_customer_moscow_1(message: types.Message):
 async def super_customer_osh(message: types.Message):
     try:
         connection = await asyncpg.connect(POSTGRES_URL)
-        await handle_super_customer(message, 'ОШ', connection)
+        await handle_super_customer(message, 'Ош', connection)
     except Exception as e:
         print(f"Error in super_customer_osh: {e}")
 

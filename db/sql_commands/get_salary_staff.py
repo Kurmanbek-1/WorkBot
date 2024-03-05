@@ -40,7 +40,7 @@ async def salary_salesman_bishkek(message: types.Message):
 
 async def salary_salesman_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await salary_salesman(message, connection, 'ОШ')
+    await salary_salesman(message, connection, 'Ош')
 
 
 async def salary_salesman_moscow_1(message: types.Message):

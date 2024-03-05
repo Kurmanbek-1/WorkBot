@@ -60,7 +60,6 @@ async def load_schedule(message: types.Message, state: FSMContext):
         data['schedule'] = message.text
     await fsm_reg_staff.next()
     await message.answer('Сотрудник какого филиала?\n'
-                         'Если Москва, то указать какой филиал!\n'
                          'Выберите снизу по кнопкам, какой город!',
                          reply_markup=buttons.city_markup)
 

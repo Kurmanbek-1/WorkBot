@@ -62,7 +62,6 @@ async def load_price(message: types.Message, state: FSMContext):
             data['price'] = message.text
         await fsm_products.next()
         await message.answer('Город?\n'
-                             'Если Москва, то указать какой филиал!\n'
                              'Выберите снизу по кнопкам, какой город!',
                              reply_markup=buttons.city_markup)
     else:

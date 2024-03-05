@@ -41,7 +41,7 @@ async def delete_products_coming_command_Bish(message: types.Message):
 
 
 async def delete_products_coming_command_Osh(message: types.Message):
-    await delete_products_coming_command_by_city(message, 'ОШ')
+    await delete_products_coming_command_by_city(message, 'Ош')
 
 
 async def delete_products_coming_command_Moscow_1(message: types.Message):

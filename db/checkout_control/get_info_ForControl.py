@@ -76,12 +76,12 @@ async def control_bishkek_month(message: types.Message):
 
 async def control_day_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_day(message, 'ОШ', connection)
+    await control_day(message, 'Ош', connection)
 
 
 async def control_osh_month(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_month(message, 'ОШ', connection)
+    await control_month(message, 'Ош', connection)
 
 
 async def control_day_moscow_1(message: types.Message):
@@ -135,7 +135,7 @@ async def control_week_bish(message: types.Message):
 
 async def control_week_osh(message: types.Message):
     connection = await asyncpg.connect(POSTGRES_URL)
-    await control_week(message, 'ОШ', connection)
+    await control_week(message, 'Ош', connection)
 
 
 async def control_week_moscow_1(message: types.Message):

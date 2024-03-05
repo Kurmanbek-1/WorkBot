@@ -39,7 +39,7 @@ async def delete_booking_bish(message: types.Message):
 
 
 async def delete_booking_osh(message: types.Message):
-    await delete_booking_by_city(message, 'ОШ')
+    await delete_booking_by_city(message, 'Ош')
 
 
 async def delete_booking_Moscow_1(message: types.Message):
